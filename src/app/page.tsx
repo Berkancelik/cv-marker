@@ -1,8 +1,18 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FileText, Languages, Eye, ArrowRight, Check, ShieldCheck, Search } from "lucide-react";
+import {
+  FileText,
+  Languages,
+  Eye,
+  ArrowRight,
+  ShieldCheck,
+  LayoutTemplate,
+  PenLine,
+  Share2,
+} from "lucide-react";
 import { useCV } from "@/lib/store";
 import { TEMPLATES, CATEGORIES } from "@/lib/templates";
 import { t } from "@/lib/i18n";
@@ -20,22 +30,19 @@ export default function Home() {
   const setUiLang = useCV((s) => s.setUiLang);
   const cvLang = useCV((s) => s.cvLang);
   const setTemplate = useCV((s) => s.setTemplate);
-  const selected = useCV((s) => s.templateId);
   const tr = t(uiLang);
 
   const [previewLang] = useState<typeof cvLang>(cvLang);
   const demo = useMemo(() => sampleData(previewLang), [previewLang]);
 
-  const [category, setCategory] = useState<string>("all");
-  const [query, setQuery] = useState("");
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return TEMPLATES.filter(
-      (tpl) =>
-        (category === "all" || tpl.category === category) &&
-        (q === "" || tpl.name.toLowerCase().includes(q) || tpl.category.toLowerCase().includes(q))
-    );
-  }, [category, query]);
+  // One representative (flagship) template per style category.
+  const showcase = useMemo(
+    () =>
+      CATEGORIES.map((cat) => TEMPLATES.find((tpl) => tpl.category === cat)).filter(
+        (tpl): tpl is (typeof TEMPLATES)[number] => Boolean(tpl)
+      ),
+    []
+  );
 
   const choose = (id: string) => {
     setTemplate(id);
@@ -50,12 +57,20 @@ export default function Home() {
     );
   }
 
+  const steps = [
+    { icon: <LayoutTemplate size={22} />, title: tr.step1Title, desc: tr.step1Desc },
+    { icon: <PenLine size={22} />, title: tr.step2Title, desc: tr.step2Desc },
+    { icon: <Share2 size={22} />, title: tr.step3Title, desc: tr.step3Desc },
+  ];
+
   return (
     <main className="min-h-screen">
       {/* Nav */}
       <header className="sticky top-0 z-20 border-b border-cream-200 bg-cream-50/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <LogoFull size={34} />
+          <Link href="/" aria-label="CV Dock" className="rounded-lg transition hover:opacity-80">
+            <LogoFull size={34} />
+          </Link>
           <div className="flex items-center gap-3">
             <span className="hidden text-xs text-ink-400 sm:inline">{tr.language}</span>
             <LangToggle value={uiLang} onChange={setUiLang} />
@@ -76,22 +91,20 @@ export default function Home() {
           <h1 className="mx-auto mt-5 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
             {tr.tagline}
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-slate-500">
-            {tr.templatesSubtitle}
-          </p>
+          <p className="mx-auto mt-4 max-w-xl text-base text-slate-500">{tr.templatesSubtitle}</p>
           <div className="mt-7 flex items-center justify-center gap-3">
-            <a
-              href="#templates"
+            <button
+              onClick={() => router.push("/editor")}
               className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700"
             >
               {tr.heroCta} <ArrowRight size={16} />
-            </a>
-            <button
-              onClick={() => router.push("/editor")}
+            </button>
+            <a
+              href="#templates"
               className="rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
-              {tr.startEditing}
-            </button>
+              {tr.chooseTemplate}
+            </a>
           </div>
 
           {/* Feature row */}
@@ -116,100 +129,91 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Templates */}
-      <section id="templates" className="mx-auto max-w-6xl px-5 pb-24">
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-slate-900">
-            {TEMPLATES.length} {tr.templatesTitle}
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">{tr.templatesSubtitle}</p>
-        </div>
-
-        {/* Filter bar */}
-        <div className="mb-7 flex flex-col gap-3">
-          <div className="relative mx-auto w-full max-w-sm">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={tr.searchTemplate}
-              className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
-            />
+      {/* How it works */}
+      <section className="border-y border-cream-200 bg-cream-50/60">
+        <div className="mx-auto max-w-6xl px-5 py-14">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-slate-900">{tr.howTitle}</h2>
+            <p className="mt-2 text-sm text-slate-500">{tr.howSubtitle}</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
-            <button
-              onClick={() => setCategory("all")}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                category === "all"
-                  ? "bg-brand-600 text-white shadow-soft"
-                  : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              {tr.allCategories}
-            </button>
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                  category === cat
-                    ? "bg-brand-600 text-white shadow-soft"
-                    : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                }`}
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {steps.map((s, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-cream-200 bg-white p-6 text-center shadow-soft"
               >
-                {cat}
-              </button>
+                <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-brand-600 text-white">
+                  {s.icon}
+                </div>
+                <div className="mt-2 text-[11px] font-bold text-brand-600">{i + 1}</div>
+                <h3 className="mt-0.5 text-sm font-semibold text-slate-800">{s.title}</h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">{s.desc}</p>
+              </div>
             ))}
           </div>
-          <p className="text-center text-xs text-slate-400">
-            {filtered.length} {tr.templateCount}
-          </p>
+        </div>
+      </section>
+
+      {/* Template showcase — one per style */}
+      <section id="templates" className="mx-auto max-w-6xl px-5 pt-16">
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-bold text-slate-900">{tr.showcaseTitle}</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-slate-500">{tr.showcaseSubtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((tpl) => {
-            const isSel = selected === tpl.id;
-            return (
-              <div
-                key={tpl.id}
-                className={`group overflow-hidden rounded-2xl border bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-page ${
-                  isSel ? "border-brand-400 ring-2 ring-brand-200" : "border-slate-200"
-                }`}
-              >
-                <div className="relative border-b border-slate-100 bg-slate-50">
-                  <TemplateThumb tpl={tpl} data={demo} lang={previewLang} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/0 to-transparent opacity-0 transition group-hover:opacity-100" />
-                </div>
-                <div className="flex items-center justify-between gap-3 p-4">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="h-4 w-4 rounded-full ring-2 ring-white shadow"
-                      style={{ background: tpl.accent }}
-                    />
-                    <span className="text-sm font-semibold text-slate-800">{tpl.name}</span>
-                    {isSel && <Check size={15} className="text-brand-600" />}
-                  </div>
-                  <button
-                    onClick={() => choose(tpl.id)}
-                    className="rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-700"
-                  >
-                    {tr.useTemplate}
-                  </button>
-                </div>
+          {showcase.map((tpl) => (
+            <div
+              key={tpl.id}
+              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-page"
+            >
+              <div className="relative border-b border-slate-100 bg-slate-50">
+                <TemplateThumb tpl={tpl} data={demo} lang={previewLang} />
+                <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-0.5 text-[11px] font-semibold text-brand-700 shadow-sm ring-1 ring-brand-100">
+                  {tpl.category}
+                </span>
               </div>
-            );
-          })}
+              <div className="flex items-center justify-between gap-3 p-4">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-4 w-4 rounded-full ring-2 ring-white shadow"
+                    style={{ background: tpl.accent }}
+                  />
+                  <span className="text-sm font-semibold text-slate-800">{tpl.name}</span>
+                </div>
+                <button
+                  onClick={() => choose(tpl.id)}
+                  className="rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-700"
+                >
+                  {tr.useThisStyle}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="mx-auto max-w-6xl px-5 py-20">
+        <div className="overflow-hidden rounded-3xl bg-brand-600 px-6 py-12 text-center shadow-page">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">{tr.finalCtaTitle}</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm text-brand-50">{tr.finalCtaDesc}</p>
+          <button
+            onClick={() => router.push("/editor")}
+            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-brand-700 shadow-soft transition hover:bg-cream-50"
+          >
+            {tr.startEditing} <ArrowRight size={16} />
+          </button>
         </div>
       </section>
 
       <footer className="border-t border-cream-200 bg-cream-50">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-5 py-6 text-xs text-ink-400 sm:flex-row sm:justify-between">
-          <span>© {new Date().getFullYear()} CV Dock</span>
-          <span>{tr.builtWith}</span>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-cream-200/70 py-3">
-          <VisitorCounter />
-          <PoweredBy />
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-3 px-5 py-7">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <VisitorCounter />
+            <PoweredBy />
+          </div>
+          <span className="text-xs text-ink-400">© {new Date().getFullYear()} CV Dock</span>
         </div>
       </footer>
     </main>

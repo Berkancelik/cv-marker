@@ -91,6 +91,21 @@ export const dict = {
     feature3Title: "Canlı önizleme & PDF",
     feature3Desc: "Yazdıkça anında gör, tek tıkla PDF indir.",
     yourData: "Verilerin tarayıcında saklanır, hiçbir yere gönderilmez.",
+    // Ana sayfa tanıtım
+    howTitle: "Nasıl çalışır?",
+    howSubtitle: "Üç adımda profesyonel CV — kayıt yok, ücretsiz.",
+    step1Title: "Stilini seç",
+    step1Desc: "Modern, minimal, yönetici… her tarza uygun 300+ şablon.",
+    step2Title: "Bilgilerini doldur",
+    step2Desc: "Canlı önizlemeyle CV'ni yazdıkça anında gör.",
+    step3Title: "İndir & paylaş",
+    step3Desc: "Tek tıkla PDF indir, mobilde doğrudan paylaş.",
+    showcaseTitle: "Her stilden bir örnek",
+    showcaseSubtitle:
+      "Beğendiğin stille başla; düzenleyicide 300+ şablonun tamamına erişirsin.",
+    useThisStyle: "Bu stille başla",
+    finalCtaTitle: "Dakikalar içinde hazır CV",
+    finalCtaDesc: "Ücretsiz ve kayıt gerektirmez. Verilerin tarayıcında kalır.",
     // CV analizi & öneriler
     analyze: "CV Analizi",
     analyzeTitle: "CV Analizi & Öneriler",
@@ -199,6 +214,21 @@ export const dict = {
     feature3Title: "Live preview & PDF",
     feature3Desc: "See it as you type, download a PDF in one click.",
     yourData: "Your data stays in your browser, never sent anywhere.",
+    // Landing marketing
+    howTitle: "How it works",
+    howSubtitle: "A professional CV in three steps — no sign-up, free.",
+    step1Title: "Pick your style",
+    step1Desc: "Modern, minimal, executive… 300+ templates for every taste.",
+    step2Title: "Fill in your details",
+    step2Desc: "Watch your CV update live as you type.",
+    step3Title: "Download & share",
+    step3Desc: "One-click PDF download, share straight from mobile.",
+    showcaseTitle: "One example from every style",
+    showcaseSubtitle:
+      "Start with a style you like; access all 300+ templates in the editor.",
+    useThisStyle: "Start with this style",
+    finalCtaTitle: "A polished CV in minutes",
+    finalCtaDesc: "Free, no sign-up required. Your data stays in your browser.",
     // CV analysis & suggestions
     analyze: "CV Analysis",
     analyzeTitle: "CV Analysis & Suggestions",
