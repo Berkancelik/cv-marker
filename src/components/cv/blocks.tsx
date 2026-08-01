@@ -115,6 +115,30 @@ export function Heading({
       </h3>
     );
   }
+  if (style === "dot") {
+    return (
+      <h3 style={base} className="mb-2 flex items-center gap-2 text-[12.5px] font-bold">
+        <span
+          className="inline-block h-2 w-2 shrink-0 rounded-full"
+          style={{ background: onLight ? accent : "rgba(255,255,255,0.85)" }}
+        />
+        {children}
+      </h3>
+    );
+  }
+  if (style === "double") {
+    return (
+      <h3
+        style={{
+          ...base,
+          borderBottom: `3px double ${onLight ? hexToRgba(accent, 0.5) : "rgba(255,255,255,0.5)"}`,
+        }}
+        className="mb-2.5 pb-1 text-[12.5px] font-bold"
+      >
+        {children}
+      </h3>
+    );
+  }
   // default: underline
   return (
     <h3
@@ -391,6 +415,8 @@ export function CertificatesBlock({ ctx, onLight = true }: { ctx: RenderCtx; onL
 export function Photo({ ctx, size = 96 }: { ctx: RenderCtx; size?: number }) {
   const { data, accent } = ctx;
   if (!ctx.tpl.showPhoto) return null;
+  const shape = ctx.tpl.photoShape ?? "round";
+  const radius = shape === "round" ? "9999px" : shape === "squircle" ? "28%" : "12px";
   if (data.contact.photo) {
     // eslint-disable-next-line @next/next/no-img-element
     return (
@@ -399,8 +425,7 @@ export function Photo({ ctx, size = 96 }: { ctx: RenderCtx; size?: number }) {
         alt={data.contact.fullName}
         width={size}
         height={size}
-        style={{ width: size, height: size, objectFit: "cover" }}
-        className="rounded-full"
+        style={{ width: size, height: size, objectFit: "cover", borderRadius: radius }}
       />
     );
   }
@@ -413,8 +438,14 @@ export function Photo({ ctx, size = 96 }: { ctx: RenderCtx; size?: number }) {
     .join("");
   return (
     <div
-      style={{ width: size, height: size, background: hexToRgba(accent, 0.18), color: accent }}
-      className="rounded-full flex items-center justify-center text-2xl font-bold"
+      style={{
+        width: size,
+        height: size,
+        background: hexToRgba(accent, 0.18),
+        color: accent,
+        borderRadius: radius,
+      }}
+      className="flex items-center justify-center text-2xl font-bold"
     >
       {initials || "—"}
     </div>

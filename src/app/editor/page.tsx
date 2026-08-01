@@ -8,6 +8,7 @@ import { t } from "@/lib/i18n";
 import { TEMPLATES, CATEGORIES, getTemplate } from "@/lib/templates";
 import { LangToggle, PreviewStage, useMounted } from "@/components/ui";
 import { LogoMark } from "@/components/Logo";
+import PoweredBy from "@/components/PoweredBy";
 import EditorForm from "@/components/editor/EditorForm";
 import CVRenderer from "@/components/cv/CVRenderer";
 import CVAnalysis from "@/components/editor/CVAnalysis";
@@ -152,6 +153,10 @@ export default function EditorPage() {
           <p className="no-print mt-3 text-center text-[11px] text-slate-400">{tr.uiNote}</p>
         </div>
       </div>
+
+      <footer className="no-print border-t border-cream-200 py-4 text-center">
+        <PoweredBy />
+      </footer>
     </div>
   );
 }

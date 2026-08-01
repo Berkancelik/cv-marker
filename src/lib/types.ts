@@ -89,7 +89,11 @@ export type HeadingStyle =
   | "bar" // left vertical accent bar
   | "pill" // tinted rounded pill behind the text
   | "block" // full-width tinted bar
-  | "plain"; // no rule, just colored text
+  | "plain" // no rule, just colored text
+  | "dot" // small accent dot before the text
+  | "double"; // double bottom rule
+
+export type PhotoShape = "round" | "squircle" | "square";
 
 export interface TemplateDef {
   id: string;
@@ -103,4 +107,5 @@ export interface TemplateDef {
   uppercaseHeadings?: boolean;
   showPhoto?: boolean;
   accentBg?: boolean; // use accent as a filled background for the sidebar/banner
+  photoShape?: PhotoShape; // profile-photo corner style (default: round)
 }

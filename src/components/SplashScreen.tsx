@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { LogoFull } from "@/components/Logo";
+import PoweredBy from "@/components/PoweredBy";
 
 /**
  * Branded splash shown while the app boots. Fades out on its own after a short
@@ -35,6 +36,9 @@ export default function SplashScreen() {
           </p>
           <div className="splash-bar" />
         </div>
+      </div>
+      <div className="splash-wordmark absolute bottom-6 left-0 right-0 flex justify-center">
+        <PoweredBy />
       </div>
     </div>
   );

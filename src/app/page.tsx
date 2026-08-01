@@ -9,6 +9,8 @@ import { t } from "@/lib/i18n";
 import { sampleData } from "@/lib/sampleData";
 import { LangToggle, useMounted } from "@/components/ui";
 import { LogoFull } from "@/components/Logo";
+import PoweredBy from "@/components/PoweredBy";
+import VisitorCounter from "@/components/VisitorCounter";
 import TemplateThumb from "@/components/TemplateThumb";
 
 export default function Home() {
@@ -201,9 +203,13 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-cream-200 bg-cream-50">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-xs text-ink-400">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-5 py-6 text-xs text-ink-400 sm:flex-row sm:justify-between">
           <span>© {new Date().getFullYear()} CV Dock</span>
           <span>{tr.builtWith}</span>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-cream-200/70 py-3">
+          <VisitorCounter />
+          <PoweredBy />
         </div>
       </footer>
     </main>
