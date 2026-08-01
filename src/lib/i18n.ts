@@ -2,7 +2,7 @@ import { Lang } from "./types";
 
 export const dict = {
   tr: {
-    appName: "CV Marker",
+    appName: "CV Dock",
     tagline: "Dakikalar içinde profesyonel bir özgeçmiş oluştur",
     chooseTemplate: "Şablon Seç",
     startEditing: "Düzenlemeye Başla",
@@ -73,9 +73,16 @@ export const dict = {
     resetConfirm: "Tüm bilgiler silinip örnek veriyle değiştirilsin mi?",
     loadSample: "Örnek veriyi yükle",
     cvLanguage: "CV Dili",
-    uiNote: "Yazdır penceresinde 'Hedef' olarak 'PDF olarak kaydet'i seç.",
+    uiNote: "PDF'i indir veya mobilde 'Paylaş' ile doğrudan gönder.",
     changeTemplate: "Şablonu değiştir",
     builtWith: "Next.js ile yapıldı",
+    // PDF dışa aktarma
+    downloadPdf: "PDF indir",
+    sharePdf: "Paylaş",
+    preparingPdf: "Hazırlanıyor…",
+    pdfShareTitle: "Özgeçmişim",
+    pdfShareText: "CV Dock ile hazırladığım özgeçmiş.",
+    pdfError: "PDF oluşturulamadı, lütfen tekrar dene.",
     heroCta: "Hemen başla",
     feature1Title: "120+ hazır şablon",
     feature1Desc: "Klasik, modern, minimal — her tarza uygun tasarımlar.",
@@ -105,7 +112,7 @@ export const dict = {
     noTitleForSummary: "Önce ünvan/pozisyon gir ki sana özet önerebileyim.",
   },
   en: {
-    appName: "CV Marker",
+    appName: "CV Dock",
     tagline: "Build a professional resume in minutes",
     chooseTemplate: "Choose Template",
     startEditing: "Start Editing",
@@ -174,9 +181,16 @@ export const dict = {
     resetConfirm: "Replace all data with sample content?",
     loadSample: "Load sample data",
     cvLanguage: "CV Language",
-    uiNote: "In the print dialog, choose 'Save as PDF' as the destination.",
+    uiNote: "Download the PDF, or send it straight from mobile with 'Share'.",
     changeTemplate: "Change template",
     builtWith: "Built with Next.js",
+    // PDF export
+    downloadPdf: "Download PDF",
+    sharePdf: "Share",
+    preparingPdf: "Preparing…",
+    pdfShareTitle: "My résumé",
+    pdfShareText: "The résumé I built with CV Dock.",
+    pdfError: "Could not create the PDF, please try again.",
     heroCta: "Get started",
     feature1Title: "120+ ready templates",
     feature1Desc: "Classic, modern, minimal — a design for every style.",

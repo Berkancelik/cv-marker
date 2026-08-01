@@ -124,7 +124,7 @@ export default function EditorForm() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label={tr.fullName} value={c.fullName} onChange={(v) => s.updateContact({ fullName: v })} />
           <Field label={tr.jobTitle} value={c.title} onChange={(v) => s.updateContact({ title: v })} />
           <Field label={tr.email} value={c.email} onChange={(v) => s.updateContact({ email: v })} />
@@ -151,7 +151,7 @@ export default function EditorForm() {
       <SectionCard icon={<Briefcase size={16} />} title={tr.sectionExperience}>
         {s.data.experience.map((e) => (
           <ItemCard key={e.id} onRemove={() => s.removeExperience(e.id)}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Field label={tr.role} value={e.role} onChange={(v) => s.updateExperience(e.id, { role: v })} />
               <Field label={tr.company} value={e.company} onChange={(v) => s.updateExperience(e.id, { company: v })} />
               <Field label={tr.location} value={e.location} onChange={(v) => s.updateExperience(e.id, { location: v })} />
@@ -189,7 +189,7 @@ export default function EditorForm() {
       <SectionCard icon={<GraduationCap size={16} />} title={tr.sectionEducation}>
         {s.data.education.map((e) => (
           <ItemCard key={e.id} onRemove={() => s.removeEducation(e.id)}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Field label={tr.degree} value={e.degree} onChange={(v) => s.updateEducation(e.id, { degree: v })} />
               <Field label={tr.school} value={e.school} onChange={(v) => s.updateEducation(e.id, { school: v })} />
               <Field label={tr.location} value={e.location} onChange={(v) => s.updateEducation(e.id, { location: v })} />
@@ -208,7 +208,7 @@ export default function EditorForm() {
       <SectionCard icon={<FolderGit2 size={16} />} title={tr.sectionProjects}>
         {s.data.projects.map((p) => (
           <ItemCard key={p.id} onRemove={() => s.removeProject(p.id)}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Field label={tr.projectName} value={p.name} onChange={(v) => s.updateProject(p.id, { name: v })} />
               <Field label={tr.link} value={p.link} onChange={(v) => s.updateProject(p.id, { link: v })} />
             </div>
@@ -250,7 +250,7 @@ export default function EditorForm() {
               value={l.level}
               placeholder={tr.languageLevel}
               onChange={(e) => s.updateLanguage(l.id, { level: e.target.value })}
-              className="w-40 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+              className="w-28 shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-100 sm:w-40"
             />
             <button onClick={() => s.removeLanguage(l.id)} className="text-slate-400 hover:text-red-500">
               <Trash2 size={15} />
@@ -264,7 +264,7 @@ export default function EditorForm() {
       <SectionCard icon={<Award size={16} />} title={tr.sectionCertificates}>
         {s.data.certificates.map((cert) => (
           <ItemCard key={cert.id} onRemove={() => s.removeCertificate(cert.id)}>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <Field label={tr.certName} value={cert.name} onChange={(v) => s.updateCertificate(cert.id, { name: v })} />
               <Field label={tr.issuer} value={cert.issuer} onChange={(v) => s.updateCertificate(cert.id, { issuer: v })} />
               <Field label={tr.date} value={cert.date} onChange={(v) => s.updateCertificate(cert.id, { date: v })} />

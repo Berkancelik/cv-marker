@@ -1,6 +1,6 @@
-# CV Marker
+# CV Dock
 
-Modern, açık temalı bir **CV / özgeçmiş oluşturucu**. Kullanıcı 120+ profesyonel şablon arasından seçer, bilgilerini doldurur, canlı önizlemeyi görür ve tek tıkla PDF olarak indirir. Arayüz ve CV içeriği **Türkçe / İngilizce** desteklidir.
+Modern, açık temalı bir **CV / özgeçmiş oluşturucu**. Kullanıcı 120+ profesyonel şablon arasından seçer, bilgilerini doldurur, canlı önizlemeyi görür ve CV'sini gerçek bir PDF olarak indirir ya da mobilde doğrudan paylaşır. Arayüz ve CV içeriği **Türkçe / İngilizce** desteklidir. Kurumsal renkler (adaçayı yeşili / antrasit / krem) ve markalı bir açılış (splash) ekranıyla gelir.
 
 ## Özellikler
 
@@ -9,7 +9,9 @@ Modern, açık temalı bir **CV / özgeçmiş oluşturucu**. Kullanıcı 120+ pr
 - 👀 **Canlı önizleme** — yazdıkça anında A4 önizleme
 - 🌍 **TR / EN** — hem arayüz hem CV içeriği için iki dil
 - 🎚️ **Vurgu rengi** — hazır paletten veya özel renk seçiciyle her şablonu kişiselleştir
-- 📄 **PDF indir** — tarayıcı yazdırma diyaloğundan "PDF olarak kaydet"
+- 📄 **Gerçek PDF indir** — `jsPDF` + `html2canvas` ile A4 PDF oluşturulur; tarayıcı yazdırma diyaloğuna gerek yok
+- 📤 **Mobilde paylaş** — Web Share API ile PDF'i doğrudan WhatsApp, e-posta, AirDrop vb.'ye gönder
+- 📱 **Mobil uyumlu** — dokunmatik dostu form, esneyen araç çubuğu, PWA manifesti ve markalı splash ekran
 - 📸 **Fotoğraf yükleme** — yuvarlak profil fotoğrafı (yoksa baş harfleri gösterilir)
 - 💾 **Otomatik kayıt** — tüm veriler tarayıcıda `localStorage`'da saklanır, hiçbir yere gönderilmez
 - 🧩 Bölümler: Kişisel bilgiler, özet, iş deneyimi, eğitim, projeler, yetenekler (seviye barları), diller, sertifikalar
@@ -17,9 +19,10 @@ Modern, açık temalı bir **CV / özgeçmiş oluşturucu**. Kullanıcı 120+ pr
 ## Teknolojiler
 
 - [Next.js 14](https://nextjs.org) (App Router) + TypeScript
-- Tailwind CSS (açık tema)
+- Tailwind CSS (açık tema, kurumsal adaçayı/antrasit/krem paleti)
 - Zustand (durum yönetimi + kalıcılık)
 - lucide-react (ikonlar)
+- jsPDF + html2canvas (istemci taraflı PDF üretimi) + Web Share API
 
 > Not: Uygulama tamamen istemci taraflıdır; ayrı bir backend/veritabanı gerektirmez.
 
@@ -37,9 +40,9 @@ npm run build
 npm start
 ```
 
-## PDF olarak indirme
+## PDF indirme & paylaşma
 
-Editör sağ üstteki **PDF indir** düğmesi tarayıcının yazdırma penceresini açar. Hedef olarak **"PDF olarak kaydet"** seçilir. Yazdırma stilleri yalnızca CV sayfasını (A4, kenarlıksız) bastıracak şekilde ayarlanmıştır.
+Editör sağ üstteki **PDF indir** düğmesi, CV'yi ekran dışında tam boyutta (A4) yeniden çizip `html2canvas` ile görüntüye, ardından `jsPDF` ile çok sayfalı bir PDF'e dönüştürür ve dosyayı indirir — tarayıcı yazdırma diyaloğuna ihtiyaç yoktur. Mobil cihazlarda ayrıca bir **Paylaş** düğmesi görünür; bu, Web Share API üzerinden PDF dosyasını doğrudan işletim sisteminin paylaşım sayfasına (WhatsApp, e-posta, AirDrop, vb.) verir. Web Share desteklenmiyorsa paylaş düğmesi otomatik olarak indirmeye düşer.
 
 ## Proje yapısı
 
@@ -49,15 +52,23 @@ src/
     page.tsx           # Açılış sayfası + şablon galerisi
     editor/page.tsx    # Editör (form + canlı önizleme + araç çubuğu)
     layout.tsx, globals.css
+    icon.svg           # Favicon (CV Dock markası)
+    manifest.ts        # PWA manifesti
   components/
+    Logo.tsx           # CV Dock SVG logo (mark + lockup)
+    SplashScreen.tsx   # Açılış (splash) ekranı
     cv/
       CVRenderer.tsx   # Düzen motoru (8 layout türü)
       blocks.tsx       # Paylaşılan CV bölüm blokları
-    editor/EditorForm.tsx
+    editor/
+      EditorForm.tsx
+      ExportMenu.tsx   # PDF indir / paylaş
+      CVAnalysis.tsx
     TemplateThumb.tsx  # Galeri önizlemeleri
     ui.tsx             # Ortak form/dil bileşenleri
   lib/
     templates.ts       # 20 şablon tanımı
+    pdf.ts             # PDF üretimi (jsPDF + html2canvas)
     store.ts           # Zustand store (localStorage)
     i18n.ts            # TR/EN sözlük
     types.ts, sampleData.ts

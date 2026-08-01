@@ -2,17 +2,20 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Printer, Download, RotateCcw, Palette, LayoutGrid } from "lucide-react";
+import { ArrowLeft, RotateCcw, Palette, LayoutGrid } from "lucide-react";
 import { useCV } from "@/lib/store";
 import { t } from "@/lib/i18n";
 import { TEMPLATES, CATEGORIES, getTemplate } from "@/lib/templates";
 import { LangToggle, PreviewStage, useMounted } from "@/components/ui";
+import { LogoMark } from "@/components/Logo";
 import EditorForm from "@/components/editor/EditorForm";
 import CVRenderer from "@/components/cv/CVRenderer";
 import CVAnalysis from "@/components/editor/CVAnalysis";
+import ExportMenu from "@/components/editor/ExportMenu";
 
 const ACCENTS = [
-  "#3366ff",
+  "#63722f", // CV Dock sage
+  "#2e2e2e", // ink
   "#0d9488",
   "#15803d",
   "#e11d48",
@@ -20,8 +23,7 @@ const ACCENTS = [
   "#7c3aed",
   "#0891b2",
   "#b45309",
-  "#1e293b",
-  "#111827",
+  "#1d4ed8",
 ];
 
 export default function EditorPage() {
@@ -33,13 +35,11 @@ export default function EditorPage() {
 
   if (!mounted) {
     return (
-      <div className="grid min-h-screen place-items-center text-slate-400">
-        <div className="animate-pulse text-sm">CV Marker…</div>
+      <div className="grid min-h-screen place-items-center text-ink-300">
+        <div className="animate-pulse text-sm">CV Dock…</div>
       </div>
     );
   }
-
-  const handlePrint = () => window.print();
 
   return (
     <div className="min-h-screen">
@@ -48,12 +48,14 @@ export default function EditorPage() {
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-4 py-2.5">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100"
+            className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-ink-600 transition hover:bg-brand-50"
           >
-            <ArrowLeft size={16} /> {tr.backToTemplates}
+            <ArrowLeft size={16} className="shrink-0" />
+            <LogoMark size={22} className="shrink-0" />
+            <span className="hidden sm:inline">{tr.backToTemplates}</span>
           </Link>
 
-          <div className="mx-1 h-5 w-px bg-slate-200" />
+          <div className="mx-1 hidden h-5 w-px bg-slate-200 sm:block" />
 
           {/* Template select */}
           <label className="inline-flex items-center gap-2 text-xs text-slate-500">
@@ -105,12 +107,12 @@ export default function EditorPage() {
             </div>
           </div>
 
-          <div className="ml-auto flex items-center gap-2.5">
+          <div className="ml-auto flex flex-wrap items-center justify-end gap-2.5">
             <div className="flex items-center gap-1.5">
               <span className="hidden text-[11px] text-slate-400 sm:inline">{tr.cvLanguage}</span>
               <LangToggle value={s.cvLang} onChange={s.setCvLang} size="sm" />
             </div>
-            <div className="h-5 w-px bg-slate-200" />
+            <div className="hidden h-5 w-px bg-slate-200 sm:block" />
             <div className="flex items-center gap-1.5">
               <span className="hidden text-[11px] text-slate-400 sm:inline">UI</span>
               <LangToggle value={s.uiLang} onChange={s.setUiLang} size="sm" />
@@ -122,17 +124,13 @@ export default function EditorPage() {
               onClick={() => {
                 if (confirm(tr.resetConfirm)) s.loadSample();
               }}
+              title={tr.loadSample}
               className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50"
             >
-              <RotateCcw size={14} /> <span className="hidden sm:inline">{tr.loadSample}</span>
+              <RotateCcw size={14} /> <span className="hidden lg:inline">{tr.loadSample}</span>
             </button>
 
-            <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-soft transition hover:bg-brand-700"
-            >
-              <Download size={14} /> {tr.download}
-            </button>
+            <ExportMenu />
           </div>
         </div>
       </header>

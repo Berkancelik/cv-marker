@@ -18,7 +18,7 @@ export const CATEGORY_BY_LAYOUT: Record<LayoutKind, string> = {
 
 // ---- The original, hand-tuned 20 templates ----
 const CURATED: Omit<TemplateDef, "category">[] = [
-  { id: "aurora", name: "Aurora", layout: "sidebar-left", accent: "#3366ff", font: "sans", showPhoto: true, accentBg: true, uppercaseHeadings: true },
+  { id: "aurora", name: "Aurora", layout: "sidebar-left", accent: "#63722f", font: "sans", showPhoto: true, accentBg: true, uppercaseHeadings: true },
   { id: "berlin", name: "Berlin", layout: "header-banner", accent: "#0f766e", font: "sans", showPhoto: true, accentBg: true },
   { id: "classic", name: "Classic", layout: "classic", accent: "#1f2937", font: "serif", uppercaseHeadings: true },
   { id: "coral", name: "Coral", layout: "sidebar-right", accent: "#e11d48", font: "sans", showPhoto: true, accentBg: false },

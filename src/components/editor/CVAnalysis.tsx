@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { Gauge, X, Lightbulb, Sparkles, Check, RefreshCw, ListChecks } from "lucide-react";
 import { useCV } from "@/lib/store";
 import { t } from "@/lib/i18n";
@@ -19,6 +20,18 @@ export default function CVAnalysis() {
   const [open, setOpen] = useState(false);
   const [applied, setApplied] = useState(false);
   const [seed, setSeed] = useState(0); // regenerate trigger (kept for parity / future variation)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // Lock body scroll while the modal is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   const analysis = useMemo(
     () => (open ? analyzeCV(s.data, s.uiLang) : null),
@@ -62,13 +75,16 @@ export default function CVAnalysis() {
         <span className="hidden md:inline">{tr.analyze}</span>
       </button>
 
-      {open && analysis && (
-        <div
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/40 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-        >
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div
+      {open &&
+        analysis &&
+        mounted &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          >
+            <div className="flex min-h-full items-center justify-center p-4">
+              <div
               className="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200"
               onClick={(e) => e.stopPropagation()}
             >
@@ -211,8 +227,9 @@ export default function CVAnalysis() {
             </div>
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body
+        )}
     </>
   );
 }

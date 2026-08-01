@@ -8,6 +8,7 @@ import { TEMPLATES, CATEGORIES } from "@/lib/templates";
 import { t } from "@/lib/i18n";
 import { sampleData } from "@/lib/sampleData";
 import { LangToggle, useMounted } from "@/components/ui";
+import { LogoFull } from "@/components/Logo";
 import TemplateThumb from "@/components/TemplateThumb";
 
 export default function Home() {
@@ -41,8 +42,8 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="grid min-h-screen place-items-center text-slate-400">
-        <div className="animate-pulse text-sm">CV Marker…</div>
+      <div className="grid min-h-screen place-items-center text-ink-300">
+        <div className="animate-pulse text-sm">CV Dock…</div>
       </div>
     );
   }
@@ -50,18 +51,11 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Nav */}
-      <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-cream-200 bg-cream-50/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <div className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-white">
-              <FileText size={18} />
-            </div>
-            <span className="text-lg font-bold tracking-tight text-slate-800">
-              CV<span className="text-brand-600">Marker</span>
-            </span>
-          </div>
+          <LogoFull size={34} />
           <div className="flex items-center gap-3">
-            <span className="hidden text-xs text-slate-400 sm:inline">{tr.language}</span>
+            <span className="hidden text-xs text-ink-400 sm:inline">{tr.language}</span>
             <LangToggle value={uiLang} onChange={setUiLang} />
           </div>
         </div>
@@ -71,7 +65,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-24 left-1/3 h-72 w-72 rounded-full bg-brand-200/50 blur-3xl" />
-          <div className="absolute right-10 top-10 h-64 w-64 rounded-full bg-indigo-200/40 blur-3xl" />
+          <div className="absolute right-10 top-10 h-64 w-64 rounded-full bg-cream-300/50 blur-3xl" />
         </div>
         <div className="mx-auto max-w-6xl px-5 py-16 text-center sm:py-20">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">
@@ -206,9 +200,9 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-xs text-slate-400">
-          <span>© {new Date().getFullYear()} CV Marker</span>
+      <footer className="border-t border-cream-200 bg-cream-50">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-xs text-ink-400">
+          <span>© {new Date().getFullYear()} CV Dock</span>
           <span>{tr.builtWith}</span>
         </div>
       </footer>
