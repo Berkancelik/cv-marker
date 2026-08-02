@@ -13,7 +13,7 @@ import {
   CertificateItem,
   ContactInfo,
 } from "./types";
-import { sampleData, newId } from "./sampleData";
+import { sampleData, emptyData, newId } from "./sampleData";
 
 interface CVState {
   uiLang: Lang;
@@ -55,6 +55,7 @@ interface CVState {
   removeCertificate: (id: string) => void;
 
   loadSample: () => void;
+  clearData: () => void;
 }
 
 export const useCV = create<CVState>()(
@@ -192,6 +193,7 @@ export const useCV = create<CVState>()(
         })),
 
       loadSample: () => set((s) => ({ data: sampleData(s.cvLang) })),
+      clearData: () => set({ data: emptyData() }),
     }),
     {
       name: "cv-marker-store",

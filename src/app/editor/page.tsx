@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, RotateCcw, Palette, LayoutGrid } from "lucide-react";
+import { ArrowLeft, RotateCcw, Eraser, Palette, LayoutGrid } from "lucide-react";
 import { useCV } from "@/lib/store";
 import { t } from "@/lib/i18n";
 import { TEMPLATES, CATEGORIES, getTemplate } from "@/lib/templates";
@@ -120,6 +120,16 @@ export default function EditorPage() {
             </div>
 
             <CVAnalysis />
+
+            <button
+              onClick={() => {
+                if (confirm(tr.clearConfirm)) s.clearData();
+              }}
+              title={tr.reset}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+            >
+              <Eraser size={14} /> <span className="hidden lg:inline">{tr.reset}</span>
+            </button>
 
             <button
               onClick={() => {
