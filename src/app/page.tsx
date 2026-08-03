@@ -99,12 +99,12 @@ export default function Home() {
             >
               {tr.heroCta} <ArrowRight size={16} />
             </button>
-            <a
-              href="#templates"
+            <Link
+              href="/templates"
               className="rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
               {tr.chooseTemplate}
-            </a>
+            </Link>
           </div>
 
           {/* Feature row */}
@@ -190,6 +190,15 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <Link
+            href="/templates"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-300 bg-white px-6 py-3 text-sm font-semibold text-brand-700 shadow-soft transition hover:bg-brand-50"
+          >
+            {tr.allTemplates} <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
 

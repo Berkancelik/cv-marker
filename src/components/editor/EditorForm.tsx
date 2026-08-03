@@ -15,8 +15,10 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useCV } from "@/lib/store";
 import { t } from "@/lib/i18n";
+import { getTemplate } from "@/lib/templates";
 import { Field, TextArea } from "@/components/ui";
 
 function SectionCard({
@@ -72,6 +74,7 @@ export default function EditorForm() {
   const tr = t(s.uiLang);
   const c = s.data.contact;
   const fileRef = useRef<HTMLInputElement>(null);
+  const photoUnsupported = !!c.photo && !getTemplate(s.templateId).showPhoto;
 
   const onPhoto = (file?: File) => {
     if (!file) return;
@@ -123,6 +126,15 @@ export default function EditorForm() {
             />
           </div>
         </div>
+
+        {photoUnsupported && (
+          <p className="rounded-lg bg-amber-50 px-3 py-2 text-[11.5px] leading-relaxed text-amber-700 ring-1 ring-amber-100">
+            {tr.photoTemplateHint}{" "}
+            <Link href="/templates" className="font-semibold underline underline-offset-2">
+              {tr.photoOnly}
+            </Link>
+          </p>
+        )}
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label={tr.fullName} value={c.fullName} onChange={(v) => s.updateContact({ fullName: v })} />
