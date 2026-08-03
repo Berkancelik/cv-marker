@@ -1,4 +1,5 @@
 import { CVData, Lang } from "./types";
+import { SAMPLE_PHOTO } from "./samplePhoto";
 
 const uid = () => Math.random().toString(36).slice(2, 9);
 
@@ -14,7 +15,7 @@ export function sampleData(lang: Lang): CVData {
         website: "elifyilmaz.dev",
         linkedin: "linkedin.com/in/elifyilmaz",
         github: "github.com/elifyilmaz",
-        photo: "",
+        photo: SAMPLE_PHOTO,
       },
       summary:
         "6+ yıl deneyimli, kullanıcı odaklı arayüzler geliştiren frontend mühendisi. React ve TypeScript ekosisteminde uzman; performans, erişilebilirlik ve temiz mimariye önem veririm.",
